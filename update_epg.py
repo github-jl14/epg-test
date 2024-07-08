@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from lxml import etree
 import datetime
+import logging
 
 # Function to fetch and parse the TV schedule
 def fetch_tv_schedule(url):
@@ -57,6 +58,20 @@ def update_epg(schedule, output_file):
     tree = etree.ElementTree(root)
     with open(output_file, "wb") as f:
         tree.write(f, pretty_print=True, xml_declaration=True, encoding="UTF-8")
+
+logging.basicConfig(level=logging.INFO)
+
+def update_epg():
+    try:
+        logging.info("Starting EPG update process")
+        # Add your EPG updating logic here
+        logging.info("EPG update process completed successfully")
+    except Exception as e:
+        logging.error(f"Failed to update EPG: {e}")
+        raise
+
+if __name__ == "__main__":
+    update_epg()
 
 # URL of the TV schedule page (example)
 tv_schedule_url = "https://www.tv5.com.ph/schedule"
