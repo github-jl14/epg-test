@@ -27,12 +27,14 @@ jobs:
       run: python update_epg.py 2>&1 | tee update_epg.log
 
     - name: Commit and push changes
+      env:
+        PAT: ${{ secrets.PAT }}
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
-        git push
+        git push https://github-actions:${{ secrets.PAT }}@github.com/github-jl14/epg-test.git HEAD:main
 
     - name: Upload log file
       uses: actions/upload-artifact@v3
