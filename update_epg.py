@@ -59,7 +59,7 @@ def update_epg(schedule, output_file):
         tree.write(f, pretty_print=True, xml_declaration=True, encoding="UTF-8")
 
 # URL of the TV schedule page (example)
-tv_schedule_url = "http://example.com/tv-schedule"
+tv_schedule_url = "https://www.tv5.com.ph/schedule"
 
 # Fetch the TV schedule
 schedule = fetch_tv_schedule(tv_schedule_url)
