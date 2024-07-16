@@ -29,14 +29,12 @@ jobs:
     - name: Commit and push changes
       env:
         PAT: ${{ secrets.PAT }}
-        GIT_USERNAME: 'github-jl14'
-        GIT_EMAIL: 'alt444.001@gmail.com'
       run: |
-        git config --global user.name $GIT_USERNAME
-        git config --global user.email $GIT_EMAIL
+        git config --global user.name 'github-jl14'
+        git config --global user.email 'alt444.001@gmail.com'
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
-        git remote set-url origin https://$PAT@github.com/github-jl14/epg-test.git
+        git remote set-url origin https://${PAT}@github.com/github-jl14/epg-test.git
         git push origin HEAD:main
 
     - name: Upload log file
