@@ -1,0 +1,44 @@
+name: Update EPG
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  push:
+    branches:
+      - main
+
+jobs:
+  update-epg:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install requests beautifulsoup4 lxml
+
+    - name: Update EPG
+      run: python update_epg.py 2>&1 | tee update_epg.log
+
+    - name: Commit and push changes
+      env:
+        PAT: ${{ secrets.PAT }}
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add epg.xml update_epg.log
+        git commit -m 'Update EPG'
+        git push https://github-actions:${{ secrets.PAT }}@github.com/github-jl14/epg-test.git HEAD:main
+
+    - name: Upload log file
+      uses: actions/upload-artifact@v3
+      with:
+        name: update_epg_log
+        path: update
+        _epg.log
