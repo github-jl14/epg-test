@@ -33,11 +33,11 @@ jobs:
 
     - name: Commit and push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT_REPO_WORKFLOW }}
+        TOKEN: ${{ secrets.PAT_REPO_WORKFLOW }}
       run: |
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
-        git push https://${{secrets.PAT_REPO_WORKFLOW}}@github.com/github-jl14/epg-test.git
+        git push https://${{ TOKEN }}@github.com/github-jl14/epg-test.git
 
     - name: Upload log file
       uses: actions/upload-artifact@v3
