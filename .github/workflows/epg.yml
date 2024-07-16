@@ -40,5 +40,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: update_epg_log
-        path: update
-        _epg.log
+        path: update_epg.log
