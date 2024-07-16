@@ -33,7 +33,7 @@ jobs:
 
     - name: Commit and push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT_REPO_WORKFLOW }}
       run: |
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
