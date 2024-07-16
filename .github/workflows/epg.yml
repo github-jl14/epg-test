@@ -26,26 +26,18 @@ jobs:
     - name: Update EPG
       run: python update_epg.py 2>&1 | tee update_epg.log
 
-    - name: Store PAT
-      env:
-        PAT: ${{ secrets.PAT }}
-      run: |
-        git config --global credential.approve store
-        git credential approve -file ~/.git-credentials <<EOF
-        https://
-        protocol=https
-        host=github.com
-        username=github-jl14
-        password=${PAT}
-        EOF
-
-    - name: Commit and push changes
+    - name: Configure Git
       run: |
         git config --global user.name 'github-jl14'
         git config --global user.email 'alt444.001@gmail.com'
+
+    - name: Commit and push changes
+      env:
+        PAT: ${{ secrets.PAT }}
+      run: |
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
-        git push https://github.com/
+        git push https://github.com/github-jl14/repo-name.git
 
     - name: Upload log file
       uses: actions/upload-artifact@v3
