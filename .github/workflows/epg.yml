@@ -30,7 +30,7 @@ jobs:
       env:
         PAT: ${{ secrets.PAT }}
       run: |
-        git config --global credential.helper store 
+        git config --global credential.helper fill
         git credential approve -file ~/.git-credentials <<EOF
         https://
         protocol=https
