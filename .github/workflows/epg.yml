@@ -31,7 +31,7 @@ jobs:
         PAT: ${{ secrets.PAT }}
       run: |
         git config --global credential.helper store
-        git credential store --file ~/.git-credentials <<EOF
+        git credential fill --file ~/.git-credentials <<EOF
         https://
         protocol=https
         host=github.com
