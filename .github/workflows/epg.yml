@@ -37,7 +37,7 @@ jobs:
       run: |
         git add epg.xml update_epg.log
         git commit -m 'Update EPG'
-        git push https://github.com/github-jl14/repo-name.git
+        git push https://github.com/github-jl14/epg-test.git
 
     - name: Upload log file
       uses: actions/upload-artifact@v3
