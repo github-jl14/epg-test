@@ -1,17 +1,18 @@
-import requests
+import urllib.request
+from inscriptis import get_text
 from bs4 import BeautifulSoup
 from lxml import etree
 import datetime
 import logging
 
-# Function to fetch and parse the TV schedule
+# Function to fetch and parse the TV schedule using urllib and inscriptis
 def fetch_tv_schedule(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        print(f"Failed to fetch TV schedule. Status code: {response.status_code}")
-        return None
+    html = urllib.request.urlopen(url).read().decode('utf-8')
+    text = get_text(html)
 
-    soup = BeautifulSoup(response.content, 'html.parser')
+    # Parse the plain text using BeautifulSoup
+    soup = BeautifulSoup(text, 'html.parser')
+    
     # This part depends on the actual structure of the website
     # Example assumes each program is contained in a <div class="program">
     programs = soup.find_all('div', class_='program')
@@ -61,7 +62,7 @@ def update_epg(schedule, output_file):
 
 logging.basicConfig(level=logging.INFO)
 
-def update_epg():
+def update_epg_process():
     try:
         logging.info("Starting EPG update process")
         # Add your EPG updating logic here
@@ -71,17 +72,15 @@ def update_epg():
         raise
 
 if __name__ == "__main__":
-    update_epg()
+    # URL of the TV schedule page (example)
+    tv_schedule_url = "https://www.tv5.com.ph/schedule"
 
-# URL of the TV schedule page (example)
-tv_schedule_url = "https://www.tv5.com.ph/schedule"
+    # Fetch the TV schedule
+    schedule = fetch_tv_schedule(tv_schedule_url)
 
-# Fetch the TV schedule
-schedule = fetch_tv_schedule(tv_schedule_url)
-
-if schedule:
-    # Update the EPG file
-    update_epg(schedule, "epg.xml")
-    print("EPG updated successfully.")
-else:
-    print("Failed to update EPG.")
+    if schedule:
+        # Update the EPG file
+        update_epg(schedule, "epg.xml")
+        print("EPG updated successfully.")
+    else:
+        print("Failed to update EPG.")
